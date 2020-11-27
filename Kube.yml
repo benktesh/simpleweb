@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: livestreaming-deployment
+  labels:
+    app: livestreaming 
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: livestreaming
+      labels:
+        app: livestreaming
+    spec:
+      containers:
+      - name: livestreaming
+        image: livestreaming.azurecr.io/livestreaming:v1
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: livestreaming
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: livestreaming-service
+spec:
+  selector:
+    app: livestreaming
+  ports:
+    - port: 9999
+  type: LoadBalancer

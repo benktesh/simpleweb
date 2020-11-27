@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Simple Web</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="jumbotron text-center">
+    Hello from SimpleWeb !
+</div>
+<div class="container">
+
+    <!--
+    <div class="row">
+        Please select a file and click upload button.<br/>
+     <form method="POST" action="upload" enctype="multipart/form-data">
+       File: <input type="file" name="file" id="file"/> <br/>
+       </br>
+       <input type="submit" value="Upload" name="upload" id="upload" disabled='disabled'/>
+     </form>
+    </div> -->
+    <div class="row">
+        <div id="hostinfo">Host Information</div>
+    </div>
+
+
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+
+        $("#file").click(function () { // bCheck is a input type button
+            var fileName = $("#file").val();
+            if (fileName) { // returns true if the string is not empty
+                alert(fileName + " was selected");
+            } else { // no file was selected
+                alert("no file selected");
+            }
+        });
+
+
+        $("#file").change(function () {
+            var filename = $("#file").val();
+            if (filename.length > 0) {
+                $("#upload").prop('disabled', false);
+            }
+        });
+
+        $.ajax('/hostname',   // request url
+            {
+                success: function (data, status, xhr) {// success callback function
+                    $('#hostinfo').text(data);
+                }
+            });
+
+    });
+</script>
+
+</html>
